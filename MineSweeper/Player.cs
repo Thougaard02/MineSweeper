@@ -29,15 +29,15 @@ namespace MineSweeper
             {
                 Y--;
             }
-            else if (Input.KeyState(Key.DOWN))
+            if (Input.KeyState(Key.DOWN))
             {
                 Y++;
             }
-            else if (Input.KeyState(Key.RIGHT))
+            if (Input.KeyState(Key.RIGHT))
             {
                 X++;
             }
-            else if (Input.KeyState(Key.LEFT))
+            if (Input.KeyState(Key.LEFT))
             {
                 X--;
             }

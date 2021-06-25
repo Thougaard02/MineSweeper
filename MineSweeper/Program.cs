@@ -16,7 +16,7 @@ namespace MineSweeper
         static void Main(string[] args)
         {
             ConsoleEx.Create(50, 36);
-            ConsoleEx.SetFont("Consolas", 12, 16);
+            ConsoleEx.SetFont("Consolas", 18, 24);
 
             Random random = new Random();
             player = new Player();
@@ -25,34 +25,21 @@ namespace MineSweeper
             timer.Elapsed += OnTick;
             timer.Start();
 
-            //Fixed Jonas's spaghetti code by comment it out
-            //player.Lose = OnLose;
-
             while (true)
             {
                 ConsoleEx.WriteLine("Score: " + score);
                 player.Logic();
                 AddEnemy();
                 IsPlayerHit();
-                ConsoleEx.WriteCharacter((int)player.X, (int)player.Y, 'A', Color.Cyan);
+                ConsoleEx.WriteCharacter((int)player.X, (int)player.Y, '☺', Color.Cyan);
                 Thread.Sleep(25);
                 ConsoleEx.Update();
                 ConsoleEx.Clear();
             }
         }
-
-        //Fixed Jonas's spaghetti code by comment it out 
-        //private static void OnLose()
-        //{
-        //    score = 0;
-
-        //    //Bug can die 2 times instance of new player
-        //    //player = new Player();
-        //}
-
         private static void OnTick(object sender, System.Timers.ElapsedEventArgs e)
         {
-            enemyList.Add(new Enemy());
+            enemyList.Add(new Enemy(player));
             score++;
         }
 
@@ -71,8 +58,8 @@ namespace MineSweeper
         {
             for (int i = 0; i < enemyList.Count; i++)
             {
-                enemyList[i].Logic(player);
-                ConsoleEx.WriteCharacter((int)enemyList[i].X, (int)enemyList[i].Y, 'B', Color.Red);
+                enemyList[i].Logic();
+                ConsoleEx.WriteCharacter((int)enemyList[i].X, (int)enemyList[i].Y, '☻', Color.Red);
             }
         }
     }

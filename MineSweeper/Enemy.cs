@@ -16,13 +16,20 @@ namespace MineSweeper
 
         public float Speed { get; set; }
 
-        public Enemy()
+        private Player player;
+        public Enemy(Player player)
         {
-            X = rng.Next(0, ConsoleEx.Width);
-            Y = rng.Next(0, ConsoleEx.Height);
+            this.player = player;
+
+            do
+            {
+                X = rng.Next(0, ConsoleEx.Width);
+                Y = rng.Next(0, ConsoleEx.Height);
+            } while (GetDistanceToPlayer(player) < 10.0f);
+
             Speed = rng.Next(5, 10);
         }
-        public void Logic(Player player)
+        public void Logic()
         {
             float dX = Math.Sign(player.X - X);
             float dY = Math.Sign(player.Y - Y);
@@ -33,14 +40,14 @@ namespace MineSweeper
             if (GetDistanceToPlayer(player) < 1.1f)
             {
                 player.IsHit = true;
-                //Fixed Jonas's spaghetti code by comment it out
-                //player.Lose?.Invoke();
             }
-        }
-        float GetDistanceToPlayer(Player player)
-        {
-            return MathF.Abs(MathF.Sqrt(MathF.Pow(player.X - X, 2) + MathF.Pow(player.Y - Y, 2)));
-        }
-    }
 
+        }
+        private float GetDistanceToPlayer(Player player)
+        {
+            return MathF.Sqrt(MathF.Abs(MathF.Pow(player.X - X, 2) + MathF.Pow(player.Y - Y, 2)));
+        }
+
+
+    }
 }
